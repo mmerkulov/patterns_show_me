@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from random import randrange
 
@@ -31,7 +33,7 @@ class SpecialSubject(Subject):
         self._observers.remove(observer)
 
     def notify(self) -> None:
-        print('Запускаем процес оповещания:')
+        print('Запускаем процесс оповещения:')
         if self._observers:
             for obs in self._observers:
                 obs.update_state(self)
@@ -47,6 +49,7 @@ class SpecialSubject(Subject):
 
 
 class Observer(ABC):
+    @abstractmethod
     def update_state(self, subject: Subject) -> None:
         pass
 
@@ -60,4 +63,14 @@ class A_Observer(Observer):
 class B_Observer(Observer):
     def update_state(self, subject: Subject) -> None:
         if subject._state == 0 or subject._state >= 2:
-            print("B_Observer: Reacted to the event")
+            print("B_Observer: Отреагировал на событие")
+
+
+subj = SpecialSubject()
+obs1 = A_Observer()
+subj.subscribe(obs1)
+
+obs2 = B_Observer()
+subj.subscribe(obs2)
+
+subj.some_logic_code()
