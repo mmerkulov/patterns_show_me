@@ -1,3 +1,6 @@
+import psycopg2
+
+
 class SingletonConnect(type):
     _instance = {}
 
